@@ -71,6 +71,8 @@ public:
     {
         return (int64_t)nTime;
     }
+
+    uint256 ComputePowHash(uint32_t nNonce) const;
 };
 
 
