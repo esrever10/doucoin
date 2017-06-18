@@ -9,6 +9,7 @@
 #include "tinyformat.h"
 #include "utilstrencodings.h"
 #include "streams.h"
+#include "util.h"
 
 uint256 CBlockHeader::GetHash() const
 {
@@ -17,25 +18,19 @@ uint256 CBlockHeader::GetHash() const
 
 uint256 CBlockHeader::ComputePowHash(uint32_t nNonce) const
 {
-    if (nVersion == 1 || nVersion == 2){
-        /**
-         * Use SHA256+SHA256 to make PoW
-         */
-        // Write the first 76 bytes of the block header to a double-SHA256 state.
-        
-        CHash256 hasher; // TODO: Create a new PowHasher named CPowHash256
-        CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
-        ss << *this;
-        assert(ss.size() == 80);
-        hasher.Write((unsigned char*)&ss[0], 76);
-        uint256 powHash;
-        CHash256(hasher).Write((unsigned char*)&nNonce, 4).Finalize((unsigned char*)&powHash);
-        return powHash;
-    } else {
-        // Abort, unknown block version.
-        assert(false);
-        return ~(uint256)0;
-    }
+    /**
+    * Use SHA256+SHA256 to make PoW
+    */
+    // Write the first 76 bytes of the block header to a double-SHA256 state.
+    
+    CHash256 hasher; // TODO: Create a new PowHasher named CPowHash256
+    CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
+    ss << *this;
+    assert(ss.size() == 80);
+    hasher.Write((unsigned char*)&ss[0], 76);
+    uint256 powHash;
+    CHash256(hasher).Write((unsigned char*)&nNonce, 4).Finalize((unsigned char*)&powHash);
+    return powHash;
 }
 
 uint256 CBlock::BuildMerkleTree(bool* fMutated) const
