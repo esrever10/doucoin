@@ -8,6 +8,7 @@
 #include "hash.h"
 #include "tinyformat.h"
 #include "utilstrencodings.h"
+#include "streams.h"
 
 uint256 CBlockHeader::GetHash() const
 {
@@ -21,43 +22,16 @@ uint256 CBlockHeader::ComputePowHash(uint32_t nNonce) const
          * Use SHA256+SHA256 to make PoW
          */
         // Write the first 76 bytes of the block header to a double-SHA256 state.
-        CDoubleSHA256Pow hasher; // TODO: Create a new PowHasher named CPowHash256
+        
+        CHash256 hasher; // TODO: Create a new PowHasher named CPowHash256
         CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
         ss << *this;
         assert(ss.size() == 80);
         hasher.Write((unsigned char*)&ss[0], 76);
         uint256 powHash;
-        CDoubleSHA256Pow(hasher).Write((unsigned char*)&nNonce, 4).Finalize((unsigned char*)&powHash);
+        CHash256(hasher).Write((unsigned char*)&nNonce, 4).Finalize((unsigned char*)&powHash);
         return powHash;
-    }else if (nVersion == 3){
-        /**
-         * Scrypt PoW
-         */
-        CScryptHash256Pow hasher;
-        CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
-        ss << *this;
-        assert(ss.size() == 80);
-        hasher.Write((unsigned char*)&ss[0], 76);
-        uint256 powHash;
-        CScryptHash256Pow(hasher).Write((unsigned char*)&nNonce, 4).Finalize((unsigned char*)&powHash);
-        return powHash;
-    }else if (nVersion == 4){
-        /**
-         *  Scrypt+SHA256 PoW
-         */
-    }else if (nVersion == 5){
-    	/**
-    	 * Keccak(1088,512,256) or Known as SHA3-256(fips202draft) Pow
-    	 */
-    	CKeccak_256 hasher;
-        CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
-        ss << *this;
-        assert(ss.size() == 80);
-        hasher.Write((unsigned char*)&ss[0], 76);
-        uint256 powHash;
-        CKeccak_256(hasher).Write((unsigned char*)&nNonce, 4).Finalize((unsigned char*)&powHash);
-        return powHash;
-    }else{
+    } else {
         // Abort, unknown block version.
         assert(false);
         return ~(uint256)0;
