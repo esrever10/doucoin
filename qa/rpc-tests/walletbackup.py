@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# Copyright (c) 2014 The Bitcoin Core developers
+# Copyright (c) 2014 The Doucoin Core developers
 # Distributed under the MIT/X11 software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -33,13 +33,13 @@ Shutdown again, restore using importwallet,
 and confirm again balances are correct.
 """
 
-from test_framework import BitcoinTestFramework
+from test_framework import DoucoinTestFramework
 from util import *
 from random import randint
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-class WalletBackupTest(BitcoinTestFramework):
+class WalletBackupTest(DoucoinTestFramework):
 
     def setup_chain(self):
         logging.info("Initializing test directory "+self.options.tmpdir)

@@ -1,10 +1,10 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2009-2014 The Doucoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_DB_H
-#define BITCOIN_DB_H
+#ifndef DOUCOIN_DB_H
+#define DOUCOIN_DB_H
 
 #include "clientversion.h"
 #include "serialize.h"
@@ -309,4 +309,4 @@ public:
     bool static Rewrite(const std::string& strFile, const char* pszSkip = NULL);
 };
 
-#endif // BITCOIN_DB_H
+#endif // DOUCOIN_DB_H

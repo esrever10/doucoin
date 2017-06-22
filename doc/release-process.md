@@ -2,7 +2,7 @@ Release Process
 ====================
 
 * update translations (ping wumpus, Diapolo or tcatm on IRC)
-* see https://github.com/bitcoin/bitcoin/blob/master/doc/translation_process.md#syncing-with-transifex
+* see https://github.com/doucoin/doucoin/blob/master/doc/translation_process.md#syncing-with-transifex
 
 * * *
 
@@ -29,11 +29,11 @@ Release Process
 
 ###perform Gitian builds
 
- From a directory containing the bitcoin source, gitian-builder and gitian.sigs
+ From a directory containing the doucoin source, gitian-builder and gitian.sigs
   
     export SIGNER=(your Gitian key, ie bluematt, sipa, etc)
 	export VERSION=(new version, e.g. 0.8.0)
-	pushd ./bitcoin
+	pushd ./doucoin
 	git checkout v${VERSION}
 	popd
 	pushd ./gitian-builder
@@ -54,29 +54,29 @@ Release Process
 
   By default, Gitian will fetch source files as needed. For offline builds, they can be fetched ahead of time:
 
-	make -C ../bitcoin/depends download SOURCES_PATH=`pwd`/cache/common
+	make -C ../doucoin/depends download SOURCES_PATH=`pwd`/cache/common
 
   Only missing files will be fetched, so this is safe to re-run for each build.
 
-###Build Bitcoin Core for Linux, Windows, and OS X:
+###Build Doucoin Core for Linux, Windows, and OS X:
 
-	./bin/gbuild --commit bitcoin=v${VERSION} ../bitcoin/contrib/gitian-descriptors/gitian-linux.yml
-	./bin/gsign --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../bitcoin/contrib/gitian-descriptors/gitian-linux.yml
-	mv build/out/bitcoin-*.tar.gz build/out/src/bitcoin-*.tar.gz ../
-	./bin/gbuild --commit bitcoin=v${VERSION} ../bitcoin/contrib/gitian-descriptors/gitian-win.yml
-	./bin/gsign --signer $SIGNER --release ${VERSION}-win --destination ../gitian.sigs/ ../bitcoin/contrib/gitian-descriptors/gitian-win.yml
-	mv build/out/bitcoin-*.zip build/out/bitcoin-*.exe ../
-	./bin/gbuild --commit bitcoin=v${VERSION} ../bitcoin/contrib/gitian-descriptors/gitian-osx.yml
-	./bin/gsign --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../bitcoin/contrib/gitian-descriptors/gitian-osx.yml
-	mv build/out/bitcoin-*-unsigned.tar.gz inputs/bitcoin-osx-unsigned.tar.gz
-	mv build/out/bitcoin-*.tar.gz build/out/bitcoin-*.dmg ../
+	./bin/gbuild --commit doucoin=v${VERSION} ../doucoin/contrib/gitian-descriptors/gitian-linux.yml
+	./bin/gsign --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../doucoin/contrib/gitian-descriptors/gitian-linux.yml
+	mv build/out/doucoin-*.tar.gz build/out/src/doucoin-*.tar.gz ../
+	./bin/gbuild --commit doucoin=v${VERSION} ../doucoin/contrib/gitian-descriptors/gitian-win.yml
+	./bin/gsign --signer $SIGNER --release ${VERSION}-win --destination ../gitian.sigs/ ../doucoin/contrib/gitian-descriptors/gitian-win.yml
+	mv build/out/doucoin-*.zip build/out/doucoin-*.exe ../
+	./bin/gbuild --commit doucoin=v${VERSION} ../doucoin/contrib/gitian-descriptors/gitian-osx.yml
+	./bin/gsign --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../doucoin/contrib/gitian-descriptors/gitian-osx.yml
+	mv build/out/doucoin-*-unsigned.tar.gz inputs/doucoin-osx-unsigned.tar.gz
+	mv build/out/doucoin-*.tar.gz build/out/doucoin-*.dmg ../
 	popd
   Build output expected:
 
-  1. source tarball (bitcoin-${VERSION}.tar.gz)
-  2. linux 32-bit and 64-bit binaries dist tarballs (bitcoin-${VERSION}-linux[32|64].tar.gz)
-  3. windows 32-bit and 64-bit installers and dist zips (bitcoin-${VERSION}-win[32|64]-setup.exe, bitcoin-${VERSION}-win[32|64].zip)
-  4. OS X unsigned installer (bitcoin-${VERSION}-osx-unsigned.dmg)
+  1. source tarball (doucoin-${VERSION}.tar.gz)
+  2. linux 32-bit and 64-bit binaries dist tarballs (doucoin-${VERSION}-linux[32|64].tar.gz)
+  3. windows 32-bit and 64-bit installers and dist zips (doucoin-${VERSION}-win[32|64]-setup.exe, doucoin-${VERSION}-win[32|64].zip)
+  4. OS X unsigned installer (doucoin-${VERSION}-osx-unsigned.dmg)
   5. Gitian signatures (in gitian.sigs/${VERSION}-<linux|win|osx-unsigned>/(your Gitian key)/
 
 ###Next steps:
@@ -100,9 +100,9 @@ Commit your signature to gitian.sigs:
 	pushd ./gitian-builder
 	# Fetch the signature as instructed by Gavin
 	cp signature.tar.gz inputs/
-	./bin/gbuild -i ../bitcoin/contrib/gitian-descriptors/gitian-osx-signer.yml
-	./bin/gsign --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../bitcoin/contrib/gitian-descriptors/gitian-osx-signer.yml
-	mv build/out/bitcoin-osx-signed.dmg ../bitcoin-${VERSION}-osx.dmg
+	./bin/gbuild -i ../doucoin/contrib/gitian-descriptors/gitian-osx-signer.yml
+	./bin/gsign --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../doucoin/contrib/gitian-descriptors/gitian-osx-signer.yml
+	mv build/out/doucoin-osx-signed.dmg ../doucoin-${VERSION}-osx.dmg
 	popd
 
 Commit your signature for the signed OS X binary:
@@ -131,35 +131,35 @@ rm SHA256SUMS
 ```
 (the digest algorithm is forced to sha256 to avoid confusion of the `Hash:` header that GPG adds with the SHA256 used for the files)
 
-- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the bitcoin.org server
-  into `/var/www/bin/bitcoin-core-${VERSION}`
+- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the doucoin.org server
+  into `/var/www/bin/doucoin-core-${VERSION}`
 
-- Update bitcoin.org version
+- Update doucoin.org version
 
-  - First, check to see if the Bitcoin.org maintainers have prepared a
-    release: https://github.com/bitcoin/bitcoin.org/labels/Releases
+  - First, check to see if the Doucoin.org maintainers have prepared a
+    release: https://github.com/doucoin/doucoin.org/labels/Releases
 
       - If they have, it will have previously failed their Travis CI
         checks because the final release files weren't uploaded.
         Trigger a Travis CI rebuild---if it passes, merge.
 
-  - If they have not prepared a release, follow the Bitcoin.org release
-    instructions: https://github.com/bitcoin/bitcoin.org#release-notes
+  - If they have not prepared a release, follow the Doucoin.org release
+    instructions: https://github.com/doucoin/doucoin.org#release-notes
 
   - After the pull request is merged, the website will automatically show the newest version within 15 minutes, as well
     as update the OS download links. Ping @saivann/@harding (saivann/harding on Freenode) in case anything goes wrong
 
 - Announce the release:
 
-  - Release sticky on bitcointalk: https://bitcointalk.org/index.php?board=1.0
+  - Release sticky on doucointalk: https://doucointalk.org/index.php?board=1.0
 
-  - Bitcoin-development mailing list
+  - Doucoin-development mailing list
 
-  - Update title of #bitcoin on Freenode IRC
+  - Update title of #doucoin on Freenode IRC
 
-  - Optionally reddit /r/Bitcoin, ... but this will usually sort out itself
+  - Optionally reddit /r/Doucoin, ... but this will usually sort out itself
 
-- Notify BlueMatt so that he can start building [https://launchpad.net/~bitcoin/+archive/ubuntu/bitcoin](the PPAs)
+- Notify BlueMatt so that he can start building [https://launchpad.net/~doucoin/+archive/ubuntu/doucoin](the PPAs)
 
 - Add release notes for the new version to the directory `doc/release-notes` in git master
 

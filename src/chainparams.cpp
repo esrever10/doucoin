@@ -1,5 +1,5 @@
 // Copyright (c) 2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2009-2014 The Doucoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -156,10 +156,10 @@ public:
         assert(hashGenesisBlock == uint256("0x000000000e8cefb707a17d305a9467da4ff5bf549a8b547b999fe9f9d6a79872"));
         assert(genesis.hashMerkleRoot == uint256("0xdf90eb9374bd72bf05278ee8a44f142888f56f531ccd93e1b51e5d7e249c0ac4"));
 
-        // vSeeds.push_back(CDNSSeedData("bitcoin.sipa.be", "seed.bitcoin.sipa.be"));
+        // vSeeds.push_back(CDNSSeedData("doucoin.sipa.be", "seed.doucoin.sipa.be"));
         // vSeeds.push_back(CDNSSeedData("bluematt.me", "dnsseed.bluematt.me"));
-        // vSeeds.push_back(CDNSSeedData("dashjr.org", "dnsseed.bitcoin.dashjr.org"));
-        // vSeeds.push_back(CDNSSeedData("bitcoinstats.com", "seed.bitcoinstats.com"));
+        // vSeeds.push_back(CDNSSeedData("dashjr.org", "dnsseed.doucoin.dashjr.org"));
+        // vSeeds.push_back(CDNSSeedData("doucoinstats.com", "seed.doucoinstats.com"));
         // vSeeds.push_back(CDNSSeedData("xf2.org", "bitseed.xf2.org"));
         vSeeds.push_back(CDNSSeedData("ali-c2", "47.93.54.44"));
         vSeeds.push_back(CDNSSeedData("ali-dou", "47.88.152.19"));
@@ -220,9 +220,9 @@ public:
         vFixedSeeds.clear();
         vSeeds.clear();
         vSeeds.push_back(CDNSSeedData("alexykot.me", "testnet-seed.alexykot.me"));
-        vSeeds.push_back(CDNSSeedData("bitcoin.petertodd.org", "testnet-seed.bitcoin.petertodd.org"));
+        vSeeds.push_back(CDNSSeedData("doucoin.petertodd.org", "testnet-seed.doucoin.petertodd.org"));
         vSeeds.push_back(CDNSSeedData("bluematt.me", "testnet-seed.bluematt.me"));
-        vSeeds.push_back(CDNSSeedData("bitcoin.schildbach.de", "testnet-seed.bitcoin.schildbach.de"));
+        vSeeds.push_back(CDNSSeedData("doucoin.schildbach.de", "testnet-seed.doucoin.schildbach.de"));
 
         base58Prefixes[PUBKEY_ADDRESS] = list_of(111);
         base58Prefixes[SCRIPT_ADDRESS] = list_of(196);

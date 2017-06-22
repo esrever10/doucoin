@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2009-2014 The Doucoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -174,8 +174,8 @@ Value addnode(const Array& params, bool fHelp)
             "1. \"node\"     (string, required) The node (see getpeerinfo for nodes)\n"
             "2. \"command\"  (string, required) 'add' to add a node to the list, 'remove' to remove a node from the list, 'onetry' to try a connection to the node once\n"
             "\nExamples:\n"
-            + HelpExampleCli("addnode", "\"192.168.0.6:8333\" \"onetry\"")
-            + HelpExampleRpc("addnode", "\"192.168.0.6:8333\", \"onetry\"")
+            + HelpExampleCli("addnode", "\"192.168.0.6:23333\" \"onetry\"")
+            + HelpExampleRpc("addnode", "\"192.168.0.6:23333\", \"onetry\"")
         );
 
     string strNode = params[0].get_str();
@@ -228,7 +228,7 @@ Value getaddednodeinfo(const Array& params, bool fHelp)
             "    \"connected\" : true|false,          (boolean) If connected\n"
             "    \"addresses\" : [\n"
             "       {\n"
-            "         \"address\" : \"192.168.0.201:8333\",  (string) The bitcoin server host and port\n"
+            "         \"address\" : \"192.168.0.201:23333\",  (string) The doucoin server host and port\n"
             "         \"connected\" : \"outbound\"           (string) connection, inbound or outbound\n"
             "       }\n"
             "       ,...\n"
@@ -394,7 +394,7 @@ Value getnetworkinfo(const Array& params, bool fHelp)
             "  }\n"
             "  ,...\n"
             "  ],\n"
-            "  \"relayfee\": x.xxxxxxxx,                (numeric) minimum relay fee for non-free transactions in btc/kb\n"
+            "  \"relayfee\": x.xxxxxxxx,                (numeric) minimum relay fee for non-free transactions in duc/kb\n"
             "  \"localaddresses\": [                    (array) list of local addresses\n"
             "  {\n"
             "    \"address\": \"xxxx\",                 (string) network address\n"

@@ -1,0 +1,11 @@
+[Protocol]
+exec=doucoin-qt '%u'
+protocol=doucoin
+input=none
+output=none
+helper=true
+listing=
+reading=false
+writing=false
+makedir=false
+deleting=false

@@ -1,10 +1,10 @@
 // Copyright (c) 2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2009-2014 The Doucoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_RPCSERVER_H
-#define BITCOIN_RPCSERVER_H
+#ifndef DOUCOIN_RPCSERVER_H
+#define DOUCOIN_RPCSERVER_H
 
 #include "amount.h"
 #include "rpcprotocol.h"
@@ -93,7 +93,7 @@ public:
 };
 
 /**
- * Bitcoin RPC command dispatcher.
+ * Doucoin RPC command dispatcher.
  */
 class CRPCTable
 {
@@ -231,4 +231,4 @@ extern bool HTTPReq_REST(AcceptedConnection *conn,
                   std::map<std::string, std::string>& mapHeaders,
                   bool fRun);
 
-#endif // BITCOIN_RPCSERVER_H
+#endif // DOUCOIN_RPCSERVER_H

@@ -1,9 +1,9 @@
-// Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2011-2013 The Doucoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_ADDRESSBOOKPAGE_H
-#define BITCOIN_QT_ADDRESSBOOKPAGE_H
+#ifndef DOUCOIN_QT_ADDRESSBOOKPAGE_H
+#define DOUCOIN_QT_ADDRESSBOOKPAGE_H
 
 #include <QDialog>
 
@@ -84,4 +84,4 @@ signals:
     void sendCoins(QString addr);
 };
 
-#endif // BITCOIN_QT_ADDRESSBOOKPAGE_H
+#endif // DOUCOIN_QT_ADDRESSBOOKPAGE_H

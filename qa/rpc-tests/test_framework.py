@@ -1,24 +1,24 @@
 #!/usr/bin/env python2
-# Copyright (c) 2014 The Bitcoin Core developers
+# Copyright (c) 2014 The Doucoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 # Base class for RPC testing
 
-# Add python-bitcoinrpc to module search path:
+# Add python-doucoinrpc to module search path:
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "python-bitcoinrpc"))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "python-doucoinrpc"))
 
 import shutil
 import tempfile
 import traceback
 
-from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
+from doucoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 from util import *
 
 
-class BitcoinTestFramework(object):
+class DoucoinTestFramework(object):
 
     # These may be over-ridden by subclasses:
     def run_test(self):
@@ -61,7 +61,7 @@ class BitcoinTestFramework(object):
         """
         assert not self.is_network_split
         stop_nodes(self.nodes)
-        wait_bitcoinds()
+        wait_doucoinds()
         self.setup_network(True)
 
     def sync_all(self):
@@ -80,7 +80,7 @@ class BitcoinTestFramework(object):
         """
         assert self.is_network_split
         stop_nodes(self.nodes)
-        wait_bitcoinds()
+        wait_doucoinds()
         self.setup_network(False)
 
     def main(self):
@@ -88,9 +88,9 @@ class BitcoinTestFramework(object):
 
         parser = optparse.OptionParser(usage="%prog [options]")
         parser.add_option("--nocleanup", dest="nocleanup", default=False, action="store_true",
-                          help="Leave bitcoinds and test.* datadir on exit or error")
+                          help="Leave doucoinds and test.* datadir on exit or error")
         parser.add_option("--srcdir", dest="srcdir", default="../../src",
-                          help="Source directory containing bitcoind/bitcoin-cli (default: %default%)")
+                          help="Source directory containing doucoind/doucoin-cli (default: %default%)")
         parser.add_option("--tmpdir", dest="tmpdir", default=tempfile.mkdtemp(prefix="test"),
                           help="Root directory for datadirs")
         parser.add_option("--tracerpc", dest="trace_rpc", default=False, action="store_true",
@@ -131,7 +131,7 @@ class BitcoinTestFramework(object):
         if not self.options.nocleanup:
             print("Cleaning up")
             stop_nodes(self.nodes)
-            wait_bitcoinds()
+            wait_doucoinds()
             shutil.rmtree(self.options.tmpdir)
 
         if success:

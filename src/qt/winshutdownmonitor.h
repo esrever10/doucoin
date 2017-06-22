@@ -1,9 +1,9 @@
-// Copyright (c) 2014 The Bitcoin developers
+// Copyright (c) 2014 The Doucoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_WINSHUTDOWNMONITOR_H
-#define BITCOIN_QT_WINSHUTDOWNMONITOR_H
+#ifndef DOUCOIN_QT_WINSHUTDOWNMONITOR_H
+#define DOUCOIN_QT_WINSHUTDOWNMONITOR_H
 
 #ifdef WIN32
 #include <QByteArray>
@@ -26,4 +26,4 @@ public:
 #endif
 #endif
 
-#endif // BITCOIN_QT_WINSHUTDOWNMONITOR_H
+#endif // DOUCOIN_QT_WINSHUTDOWNMONITOR_H

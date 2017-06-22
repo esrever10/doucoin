@@ -1,5 +1,5 @@
 // Copyright (c) 2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2009-2014 The Doucoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -50,7 +50,7 @@ void ScriptPubKeyToJSON(const CScript& scriptPubKey, Object& out, bool fIncludeH
 
     Array a;
     BOOST_FOREACH(const CTxDestination& addr, addresses)
-        a.push_back(CBitcoinAddress(addr).ToString());
+        a.push_back(CDoucoinAddress(addr).ToString());
     out.push_back(Pair("addresses", a));
 }
 
@@ -144,7 +144,7 @@ Value getrawtransaction(const Array& params, bool fHelp)
             "  ],\n"
             "  \"vout\" : [              (array of json objects)\n"
             "     {\n"
-            "       \"value\" : x.xxx,            (numeric) The value in btc\n"
+            "       \"value\" : x.xxx,            (numeric) The value in duc\n"
             "       \"n\" : n,                    (numeric) index\n"
             "       \"scriptPubKey\" : {          (json object)\n"
             "         \"asm\" : \"asm\",          (string) the asm\n"
@@ -152,7 +152,7 @@ Value getrawtransaction(const Array& params, bool fHelp)
             "         \"reqSigs\" : n,            (numeric) The required sigs\n"
             "         \"type\" : \"pubkeyhash\",  (string) The type, eg 'pubkeyhash'\n"
             "         \"addresses\" : [           (json array of string)\n"
-            "           \"bitcoinaddress\"        (string) bitcoin address\n"
+            "           \"doucoinaddress\"        (string) doucoin address\n"
             "           ,...\n"
             "         ]\n"
             "       }\n"
@@ -207,9 +207,9 @@ Value listunspent(const Array& params, bool fHelp)
             "\nArguments:\n"
             "1. minconf          (numeric, optional, default=1) The minimum confirmations to filter\n"
             "2. maxconf          (numeric, optional, default=9999999) The maximum confirmations to filter\n"
-            "3. \"addresses\"    (string) A json array of bitcoin addresses to filter\n"
+            "3. \"addresses\"    (string) A json array of doucoin addresses to filter\n"
             "    [\n"
-            "      \"address\"   (string) bitcoin address\n"
+            "      \"address\"   (string) doucoin address\n"
             "      ,...\n"
             "    ]\n"
             "\nResult\n"
@@ -217,10 +217,10 @@ Value listunspent(const Array& params, bool fHelp)
             "  {\n"
             "    \"txid\" : \"txid\",        (string) the transaction id \n"
             "    \"vout\" : n,               (numeric) the vout value\n"
-            "    \"address\" : \"address\",  (string) the bitcoin address\n"
+            "    \"address\" : \"address\",  (string) the doucoin address\n"
             "    \"account\" : \"account\",  (string) The associated account, or \"\" for the default account\n"
             "    \"scriptPubKey\" : \"key\", (string) the script key\n"
-            "    \"amount\" : x.xxx,         (numeric) the transaction amount in btc\n"
+            "    \"amount\" : x.xxx,         (numeric) the transaction amount in duc\n"
             "    \"confirmations\" : n       (numeric) The number of confirmations\n"
             "  }\n"
             "  ,...\n"
@@ -242,13 +242,13 @@ Value listunspent(const Array& params, bool fHelp)
     if (params.size() > 1)
         nMaxDepth = params[1].get_int();
 
-    set<CBitcoinAddress> setAddress;
+    set<CDoucoinAddress> setAddress;
     if (params.size() > 2) {
         Array inputs = params[2].get_array();
         BOOST_FOREACH(Value& input, inputs) {
-            CBitcoinAddress address(input.get_str());
+            CDoucoinAddress address(input.get_str());
             if (!address.IsValid())
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid Bitcoin address: ")+input.get_str());
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid Doucoin address: ")+input.get_str());
             if (setAddress.count(address))
                 throw JSONRPCError(RPC_INVALID_PARAMETER, string("Invalid parameter, duplicated address: ")+input.get_str());
            setAddress.insert(address);
@@ -279,7 +279,7 @@ Value listunspent(const Array& params, bool fHelp)
         entry.push_back(Pair("vout", out.i));
         CTxDestination address;
         if (ExtractDestination(out.tx->vout[out.i].scriptPubKey, address)) {
-            entry.push_back(Pair("address", CBitcoinAddress(address).ToString()));
+            entry.push_back(Pair("address", CDoucoinAddress(address).ToString()));
             if (pwalletMain->mapAddressBook.count(address))
                 entry.push_back(Pair("account", pwalletMain->mapAddressBook[address].name));
         }
@@ -324,7 +324,7 @@ Value createrawtransaction(const Array& params, bool fHelp)
             "     ]\n"
             "2. \"addresses\"           (string, required) a json object with addresses as keys and amounts as values\n"
             "    {\n"
-            "      \"address\": x.xxx   (numeric, required) The key is the bitcoin address, the value is the btc amount\n"
+            "      \"address\": x.xxx   (numeric, required) The key is the doucoin address, the value is the duc amount\n"
             "      ,...\n"
             "    }\n"
 
@@ -359,11 +359,11 @@ Value createrawtransaction(const Array& params, bool fHelp)
         rawTx.vin.push_back(in);
     }
 
-    set<CBitcoinAddress> setAddress;
+    set<CDoucoinAddress> setAddress;
     BOOST_FOREACH(const Pair& s, sendTo) {
-        CBitcoinAddress address(s.name_);
+        CDoucoinAddress address(s.name_);
         if (!address.IsValid())
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid Bitcoin address: ")+s.name_);
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid Doucoin address: ")+s.name_);
 
         if (setAddress.count(address))
             throw JSONRPCError(RPC_INVALID_PARAMETER, string("Invalid parameter, duplicated address: ")+s.name_);
@@ -408,7 +408,7 @@ Value decoderawtransaction(const Array& params, bool fHelp)
             "  ],\n"
             "  \"vout\" : [             (array of json objects)\n"
             "     {\n"
-            "       \"value\" : x.xxx,            (numeric) The value in btc\n"
+            "       \"value\" : x.xxx,            (numeric) The value in duc\n"
             "       \"n\" : n,                    (numeric) index\n"
             "       \"scriptPubKey\" : {          (json object)\n"
             "         \"asm\" : \"asm\",          (string) the asm\n"
@@ -416,7 +416,7 @@ Value decoderawtransaction(const Array& params, bool fHelp)
             "         \"reqSigs\" : n,            (numeric) The required sigs\n"
             "         \"type\" : \"pubkeyhash\",  (string) The type, eg 'pubkeyhash'\n"
             "         \"addresses\" : [           (json array of string)\n"
-            "           \"12tvKAXCxZjSmdNbao16dKXC8tRWfcF5oc\"   (string) bitcoin address\n"
+            "           \"12tvKAXCxZjSmdNbao16dKXC8tRWfcF5oc\"   (string) doucoin address\n"
             "           ,...\n"
             "         ]\n"
             "       }\n"
@@ -458,7 +458,7 @@ Value decodescript(const Array& params, bool fHelp)
             "  \"type\":\"type\", (string) The output type\n"
             "  \"reqSigs\": n,    (numeric) The required signatures\n"
             "  \"addresses\": [   (json array of string)\n"
-            "     \"address\"     (string) bitcoin address\n"
+            "     \"address\"     (string) doucoin address\n"
             "     ,...\n"
             "  ],\n"
             "  \"p2sh\",\"address\" (string) script address\n"
@@ -480,7 +480,7 @@ Value decodescript(const Array& params, bool fHelp)
     }
     ScriptPubKeyToJSON(script, r, false);
 
-    r.push_back(Pair("p2sh", CBitcoinAddress(CScriptID(script)).ToString()));
+    r.push_back(Pair("p2sh", CDoucoinAddress(CScriptID(script)).ToString()));
     return r;
 }
 
@@ -582,7 +582,7 @@ Value signrawtransaction(const Array& params, bool fHelp)
         fGivenKeys = true;
         Array keys = params[2].get_array();
         BOOST_FOREACH(Value k, keys) {
-            CBitcoinSecret vchSecret;
+            CDoucoinSecret vchSecret;
             bool fGood = vchSecret.SetString(k.get_str());
             if (!fGood)
                 throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid private key");

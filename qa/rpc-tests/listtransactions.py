@@ -1,12 +1,12 @@
 #!/usr/bin/env python2
-# Copyright (c) 2014 The Bitcoin Core developers
+# Copyright (c) 2014 The Doucoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 # Exercise the listtransactions API
 
-from test_framework import BitcoinTestFramework
-from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
+from test_framework import DoucoinTestFramework
+from doucoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 from util import *
 
 
@@ -31,7 +31,7 @@ def check_array_result(object_array, to_match, expected):
     if num_matched == 0:
         raise AssertionError("No objects matched %s"%(str(to_match)))
 
-class ListTransactionsTest(BitcoinTestFramework):
+class ListTransactionsTest(DoucoinTestFramework):
 
     def run_test(self):
         # Simple send, 0 to 1:

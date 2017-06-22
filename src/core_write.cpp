@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2009-2014 The Doucoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -82,7 +82,7 @@ void ScriptPubKeyToUniv(const CScript& scriptPubKey,
 
     UniValue a(UniValue::VARR);
     BOOST_FOREACH(const CTxDestination& addr, addresses)
-        a.push_back(CBitcoinAddress(addr).ToString());
+        a.push_back(CDoucoinAddress(addr).ToString());
     out.pushKV("addresses", a);
 }
 

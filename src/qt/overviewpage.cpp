@@ -1,11 +1,11 @@
-// Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2011-2013 The Doucoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "overviewpage.h"
 #include "ui_overviewpage.h"
 
-#include "bitcoinunits.h"
+#include "doucoinunits.h"
 #include "clientmodel.h"
 #include "guiconstants.h"
 #include "guiutil.h"
@@ -24,7 +24,7 @@ class TxViewDelegate : public QAbstractItemDelegate
 {
     Q_OBJECT
 public:
-    TxViewDelegate(): QAbstractItemDelegate(), unit(BitcoinUnits::BTC)
+    TxViewDelegate(): QAbstractItemDelegate(), unit(DoucoinUnits::DUC)
     {
 
     }
@@ -80,7 +80,7 @@ public:
             foreground = option.palette.color(QPalette::Text);
         }
         painter->setPen(foreground);
-        QString amountText = BitcoinUnits::formatWithUnit(unit, amount, true, BitcoinUnits::separatorAlways);
+        QString amountText = DoucoinUnits::formatWithUnit(unit, amount, true, DoucoinUnits::separatorAlways);
         if(!confirmed)
         {
             amountText = QString("[") + amountText + QString("]");
@@ -155,14 +155,14 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     currentWatchOnlyBalance = watchOnlyBalance;
     currentWatchUnconfBalance = watchUnconfBalance;
     currentWatchImmatureBalance = watchImmatureBalance;
-    ui->labelBalance->setText(BitcoinUnits::formatWithUnit(unit, balance, false, BitcoinUnits::separatorAlways));
-    ui->labelUnconfirmed->setText(BitcoinUnits::formatWithUnit(unit, unconfirmedBalance, false, BitcoinUnits::separatorAlways));
-    ui->labelImmature->setText(BitcoinUnits::formatWithUnit(unit, immatureBalance, false, BitcoinUnits::separatorAlways));
-    ui->labelTotal->setText(BitcoinUnits::formatWithUnit(unit, balance + unconfirmedBalance + immatureBalance, false, BitcoinUnits::separatorAlways));
-    ui->labelWatchAvailable->setText(BitcoinUnits::formatWithUnit(unit, watchOnlyBalance, false, BitcoinUnits::separatorAlways));
-    ui->labelWatchPending->setText(BitcoinUnits::formatWithUnit(unit, watchUnconfBalance, false, BitcoinUnits::separatorAlways));
-    ui->labelWatchImmature->setText(BitcoinUnits::formatWithUnit(unit, watchImmatureBalance, false, BitcoinUnits::separatorAlways));
-    ui->labelWatchTotal->setText(BitcoinUnits::formatWithUnit(unit, watchOnlyBalance + watchUnconfBalance + watchImmatureBalance, false, BitcoinUnits::separatorAlways));
+    ui->labelBalance->setText(DoucoinUnits::formatWithUnit(unit, balance, false, DoucoinUnits::separatorAlways));
+    ui->labelUnconfirmed->setText(DoucoinUnits::formatWithUnit(unit, unconfirmedBalance, false, DoucoinUnits::separatorAlways));
+    ui->labelImmature->setText(DoucoinUnits::formatWithUnit(unit, immatureBalance, false, DoucoinUnits::separatorAlways));
+    ui->labelTotal->setText(DoucoinUnits::formatWithUnit(unit, balance + unconfirmedBalance + immatureBalance, false, DoucoinUnits::separatorAlways));
+    ui->labelWatchAvailable->setText(DoucoinUnits::formatWithUnit(unit, watchOnlyBalance, false, DoucoinUnits::separatorAlways));
+    ui->labelWatchPending->setText(DoucoinUnits::formatWithUnit(unit, watchUnconfBalance, false, DoucoinUnits::separatorAlways));
+    ui->labelWatchImmature->setText(DoucoinUnits::formatWithUnit(unit, watchImmatureBalance, false, DoucoinUnits::separatorAlways));
+    ui->labelWatchTotal->setText(DoucoinUnits::formatWithUnit(unit, watchOnlyBalance + watchUnconfBalance + watchImmatureBalance, false, DoucoinUnits::separatorAlways));
 
     // only show immature (newly mined) balance if it's non-zero, so as not to complicate things
     // for the non-mining users
@@ -228,7 +228,7 @@ void OverviewPage::setWalletModel(WalletModel *model)
         connect(model, SIGNAL(notifyWatchonlyChanged(bool)), this, SLOT(updateWatchOnlyLabels(bool)));
     }
 
-    // update the display unit, to not use the default ("BTC")
+    // update the display unit, to not use the default ("DUC")
     updateDisplayUnit();
 }
 

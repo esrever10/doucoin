@@ -1,10 +1,10 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2009-2014 The Doucoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_NET_H
-#define BITCOIN_NET_H
+#ifndef DOUCOIN_NET_H
+#define DOUCOIN_NET_H
 
 #include "bloom.h"
 #include "compat.h"
@@ -623,4 +623,4 @@ public:
     bool Read(CAddrMan& addr);
 };
 
-#endif // BITCOIN_NET_H
+#endif // DOUCOIN_NET_H

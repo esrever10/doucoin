@@ -1,10 +1,10 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2009-2014 The Doucoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_WALLET_H
-#define BITCOIN_WALLET_H
+#ifndef DOUCOIN_WALLET_H
+#define DOUCOIN_WALLET_H
 
 #include "amount.h"
 #include "primitives/block.h"
@@ -1078,4 +1078,4 @@ private:
     std::vector<char> _ssExtra;
 };
 
-#endif // BITCOIN_WALLET_H
+#endif // DOUCOIN_WALLET_H

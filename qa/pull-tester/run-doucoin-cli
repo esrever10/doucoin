@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# This is a thin wrapper around doucoin-cli that strips the Windows-style EOLs
+# from the output if present. It is necessary when using doucoin-cli.exe on
+# Linux since shells will interpret the line-endings as part of the result.
+
+CURDIR=$(cd $(dirname "$0"); pwd)
+# Get BUILDDIR and REAL_DOUCOIND
+
+# Grab the value of $REAL_DOUCOINCLI which may be doucoin-cli.exe.
+. "${CURDIR}/tests-config.sh"
+
+"${REAL_DOUCOINCLI}" "$@" | sed 's/\r//'

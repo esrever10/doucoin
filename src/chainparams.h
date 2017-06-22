@@ -1,10 +1,10 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2009-2014 The Doucoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_CHAINPARAMS_H
-#define BITCOIN_CHAINPARAMS_H
+#ifndef DOUCOIN_CHAINPARAMS_H
+#define DOUCOIN_CHAINPARAMS_H
 
 #include "chainparamsbase.h"
 #include "checkpoints.h"
@@ -23,7 +23,7 @@ struct CDNSSeedData {
 
 /**
  * CChainParams defines various tweakable parameters of a given instance of the
- * Bitcoin system. There are three: the main network on which people trade goods
+ * Doucoin system. There are three: the main network on which people trade goods
  * and services, the public test network which gets reset from time to time and
  * a regression test mode which is intended for private networks only. It has
  * minimal difficulty to ensure that blocks can be found instantly.
@@ -52,7 +52,7 @@ public:
     int RejectBlockOutdatedMajority() const { return nRejectBlockOutdatedMajority; }
     int ToCheckBlockUpgradeMajority() const { return nToCheckBlockUpgradeMajority; }
 
-    /** Used if GenerateBitcoins is called with a negative number of threads */
+    /** Used if GenerateDoucoins is called with a negative number of threads */
     int DefaultMinerThreads() const { return nMinerThreads; }
     const CBlock& GenesisBlock() const { return genesis; }
     bool RequireRPCPassword() const { return fRequireRPCPassword; }
@@ -153,4 +153,4 @@ void SelectParams(CBaseChainParams::Network network);
  */
 bool SelectParamsFromCommandLine();
 
-#endif // BITCOIN_CHAINPARAMS_H
+#endif // DOUCOIN_CHAINPARAMS_H

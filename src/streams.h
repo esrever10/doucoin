@@ -1,10 +1,10 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2013 The Bitcoin developers
+// Copyright (c) 2009-2013 The Doucoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_STREAMS_H
-#define BITCOIN_STREAMS_H
+#ifndef DOUCOIN_STREAMS_H
+#define DOUCOIN_STREAMS_H
 
 #include "allocators.h"
 #include "serialize.h"
@@ -568,4 +568,4 @@ public:
     }
 };
 
-#endif // BITCOIN_STREAMS_H
+#endif // DOUCOIN_STREAMS_H

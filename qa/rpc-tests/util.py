@@ -1,14 +1,14 @@
-# Copyright (c) 2014 The Bitcoin Core developers
+# Copyright (c) 2014 The Doucoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
 # Helpful routines for regression testing
 #
 
-# Add python-bitcoinrpc to module search path:
+# Add python-doucoinrpc to module search path:
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "python-bitcoinrpc"))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "python-doucoinrpc"))
 
 from decimal import Decimal, ROUND_DOWN
 import json
@@ -18,7 +18,7 @@ import subprocess
 import time
 import re
 
-from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
+from doucoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 from util import *
 
 def p2p_port(n):
@@ -27,7 +27,7 @@ def rpc_port(n):
     return 12000 + n + os.getpid()%999
 
 def check_json_precision():
-    """Make sure json library being used does not lose precision converting BTC values"""
+    """Make sure json library being used does not lose precision converting DUC values"""
     n = Decimal("20000000.00000003")
     satoshis = int(json.loads(json.dumps(float(n)))*1.0e8)
     if satoshis != 2000000000000003:
@@ -58,13 +58,13 @@ def sync_mempools(rpc_connections):
             break
         time.sleep(1)
 
-bitcoind_processes = {}
+doucoind_processes = {}
 
 def initialize_datadir(dirname, n):
     datadir = os.path.join(dirname, "node"+str(n))
     if not os.path.isdir(datadir):
         os.makedirs(datadir)
-    with open(os.path.join(datadir, "bitcoin.conf"), 'w') as f:
+    with open(os.path.join(datadir, "doucoin.conf"), 'w') as f:
         f.write("regtest=1\n");
         f.write("rpcuser=rt\n");
         f.write("rpcpassword=rt\n");
@@ -76,19 +76,19 @@ def initialize_chain(test_dir):
     """
     Create (or copy from cache) a 200-block-long chain and
     4 wallets.
-    bitcoind and bitcoin-cli must be in search path.
+    doucoind and doucoin-cli must be in search path.
     """
 
     if not os.path.isdir(os.path.join("cache", "node0")):
         devnull = open("/dev/null", "w+")
-        # Create cache directories, run bitcoinds:
+        # Create cache directories, run doucoinds:
         for i in range(4):
             datadir=initialize_datadir("cache", i)
-            args = [ os.getenv("BITCOIND", "bitcoind"), "-keypool=1", "-datadir="+datadir, "-discover=0" ]
+            args = [ os.getenv("DOUCOIND", "doucoind"), "-keypool=1", "-datadir="+datadir, "-discover=0" ]
             if i > 0:
                 args.append("-connect=127.0.0.1:"+str(p2p_port(0)))
-            bitcoind_processes[i] = subprocess.Popen(args)
-            subprocess.check_call([ os.getenv("BITCOINCLI", "bitcoin-cli"), "-datadir="+datadir,
+            doucoind_processes[i] = subprocess.Popen(args)
+            subprocess.check_call([ os.getenv("DOUCOINCLI", "doucoin-cli"), "-datadir="+datadir,
                                     "-rpcwait", "getblockcount"], stdout=devnull)
         devnull.close()
         rpcs = []
@@ -116,7 +116,7 @@ def initialize_chain(test_dir):
 
         # Shut them down, and clean up cache directories:
         stop_nodes(rpcs)
-        wait_bitcoinds()
+        wait_doucoinds()
         for i in range(4):
             os.remove(log_filename("cache", i, "debug.log"))
             os.remove(log_filename("cache", i, "db.log"))
@@ -127,7 +127,7 @@ def initialize_chain(test_dir):
         from_dir = os.path.join("cache", "node"+str(i))
         to_dir = os.path.join(test_dir,  "node"+str(i))
         shutil.copytree(from_dir, to_dir)
-        initialize_datadir(test_dir, i) # Overwrite port/rpcport in bitcoin.conf
+        initialize_datadir(test_dir, i) # Overwrite port/rpcport in doucoin.conf
 
 def initialize_chain_clean(test_dir, num_nodes):
     """
@@ -160,14 +160,14 @@ def _rpchost_to_args(rpchost):
 
 def start_node(i, dirname, extra_args=None, rpchost=None):
     """
-    Start a bitcoind and return RPC connection to it
+    Start a doucoind and return RPC connection to it
     """
     datadir = os.path.join(dirname, "node"+str(i))
-    args = [ os.getenv("BITCOIND", "bitcoind"), "-datadir="+datadir, "-keypool=1", "-discover=0", "-rest" ]
+    args = [ os.getenv("DOUCOIND", "doucoind"), "-datadir="+datadir, "-keypool=1", "-discover=0", "-rest" ]
     if extra_args is not None: args.extend(extra_args)
-    bitcoind_processes[i] = subprocess.Popen(args)
+    doucoind_processes[i] = subprocess.Popen(args)
     devnull = open("/dev/null", "w+")
-    subprocess.check_call([ os.getenv("BITCOINCLI", "bitcoin-cli"), "-datadir="+datadir] +
+    subprocess.check_call([ os.getenv("DOUCOINCLI", "doucoin-cli"), "-datadir="+datadir] +
                           _rpchost_to_args(rpchost)  +
                           ["-rpcwait", "getblockcount"], stdout=devnull)
     devnull.close()
@@ -178,7 +178,7 @@ def start_node(i, dirname, extra_args=None, rpchost=None):
 
 def start_nodes(num_nodes, dirname, extra_args=None, rpchost=None):
     """
-    Start multiple bitcoinds, return RPC connections to them
+    Start multiple doucoinds, return RPC connections to them
     """
     if extra_args is None: extra_args = [ None for i in range(num_nodes) ]
     return [ start_node(i, dirname, extra_args[i], rpchost) for i in range(num_nodes) ]
@@ -188,8 +188,8 @@ def log_filename(dirname, n_node, logname):
 
 def stop_node(node, i):
     node.stop()
-    bitcoind_processes[i].wait()
-    del bitcoind_processes[i]
+    doucoind_processes[i].wait()
+    del doucoind_processes[i]
 
 def stop_nodes(nodes):
     for node in nodes:
@@ -200,11 +200,11 @@ def set_node_times(nodes, t):
     for node in nodes:
         node.setmocktime(t)
 
-def wait_bitcoinds():
-    # Wait for all bitcoinds to cleanly exit
-    for bitcoind in bitcoind_processes.values():
-        bitcoind.wait()
-    bitcoind_processes.clear()
+def wait_doucoinds():
+    # Wait for all doucoinds to cleanly exit
+    for doucoind in doucoind_processes.values():
+        doucoind.wait()
+    doucoind_processes.clear()
 
 def connect_nodes(from_connection, node_num):
     ip_port = "127.0.0.1:"+str(p2p_port(node_num))

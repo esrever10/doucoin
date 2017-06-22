@@ -1,17 +1,17 @@
 #!/usr/bin/env python2
-# Copyright (c) 2014 The Bitcoin Core developers
+# Copyright (c) 2014 The Doucoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #
 # Test -reindex with CheckBlockIndex
 #
-from test_framework import BitcoinTestFramework
-from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
+from test_framework import DoucoinTestFramework
+from doucoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 from util import *
 import os.path
 
-class ReindexTest(BitcoinTestFramework):
+class ReindexTest(DoucoinTestFramework):
 
     def setup_chain(self):
         print("Initializing test directory "+self.options.tmpdir)
@@ -25,7 +25,7 @@ class ReindexTest(BitcoinTestFramework):
     def run_test(self):
         self.nodes[0].generate(3)
         stop_node(self.nodes[0], 0)
-        wait_bitcoinds()
+        wait_doucoinds()
         self.nodes[0]=start_node(0, self.options.tmpdir, ["-debug", "-reindex", "-checkblockindex=1"])
         assert_equal(self.nodes[0].getblockcount(), 3)
         print "Success"

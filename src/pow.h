@@ -1,10 +1,10 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2009-2014 The Doucoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_POW_H
-#define BITCOIN_POW_H
+#ifndef DOUCOIN_POW_H
+#define DOUCOIN_POW_H
 
 #include <stdint.h>
 
@@ -18,4 +18,4 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
 bool CheckProofOfWork(uint256 hash, unsigned int nBits);
 uint256 GetBlockProof(const CBlockIndex& block);
 
-#endif // BITCOIN_POW_H
+#endif // DOUCOIN_POW_H

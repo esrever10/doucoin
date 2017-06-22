@@ -1,10 +1,10 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2013 The Bitcoin developers
+// Copyright (c) 2009-2013 The Doucoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_ALLOCATORS_H
-#define BITCOIN_ALLOCATORS_H
+#ifndef DOUCOIN_ALLOCATORS_H
+#define DOUCOIN_ALLOCATORS_H
 
 #include <map>
 #include <string>
@@ -265,4 +265,4 @@ typedef std::basic_string<char, std::char_traits<char>, secure_allocator<char> >
 // Byte-vector that clears its contents before deletion.
 typedef std::vector<char, zero_after_free_allocator<char> > CSerializeData;
 
-#endif // BITCOIN_ALLOCATORS_H
+#endif // DOUCOIN_ALLOCATORS_H

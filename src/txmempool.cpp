@@ -1,5 +1,5 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2009-2014 The Doucoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -244,7 +244,7 @@ public:
             }
             BOOST_FOREACH(const CTxMemPoolEntry* entry, e)
             {
-                // Fees are stored and reported as BTC-per-kb:
+                // Fees are stored and reported as DUC-per-kb:
                 CFeeRate feeRate(entry->GetFee(), entry->GetTxSize());
                 double dPriority = entry->GetPriority(entry->GetHeight()); // Want priority when it went IN
                 seenTxConfirm(feeRate, minRelayFee, dPriority, i);

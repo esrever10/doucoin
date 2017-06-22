@@ -1,9 +1,9 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2011-2014 The Doucoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_WALLETMODEL_H
-#define BITCOIN_QT_WALLETMODEL_H
+#ifndef DOUCOIN_QT_WALLETMODEL_H
+#define DOUCOIN_QT_WALLETMODEL_H
 
 #include "paymentrequestplus.h"
 #include "walletmodeltransaction.h"
@@ -92,7 +92,7 @@ public:
     }
 };
 
-/** Interface to Bitcoin wallet from Qt view code. */
+/** Interface to Doucoin wallet from Qt view code. */
 class WalletModel : public QObject
 {
     Q_OBJECT
@@ -262,4 +262,4 @@ public slots:
     void pollBalanceChanged();
 };
 
-#endif // BITCOIN_QT_WALLETMODEL_H
+#endif // DOUCOIN_QT_WALLETMODEL_H

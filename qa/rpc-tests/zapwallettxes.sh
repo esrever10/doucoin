@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (c) 2014 The Bitcoin Core developers
+# Copyright (c) 2014 The Doucoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -8,14 +8,14 @@
 if [ $# -lt 1 ]; then
         echo "Usage: $0 path_to_binaries"
         echo "e.g. $0 ../../src"
-        echo "Env vars BITCOIND and BITCOINCLI may be used to specify the exact binaries used"
+        echo "Env vars DOUCOIND and DOUCOINCLI may be used to specify the exact binaries used"
         exit 1
 fi
 
 set -f
 
-BITCOIND=${BITCOIND:-${1}/bitcoind}
-CLI=${BITCOINCLI:-${1}/bitcoin-cli}
+DOUCOIND=${DOUCOIND:-${1}/doucoind}
+CLI=${DOUCOINCLI:-${1}/doucoin-cli}
 
 DIR="${BASH_SOURCE%/*}"
 SENDANDWAIT="${DIR}/send.sh"
@@ -27,13 +27,13 @@ D=$(mktemp -d test.XXXXX)
 D1=${D}/node1
 CreateDataDir "$D1" port=11000 rpcport=11001
 B1ARGS="-datadir=$D1"
-$BITCOIND $B1ARGS &
+$DOUCOIND $B1ARGS &
 B1PID=$!
 
 D2=${D}/node2
 CreateDataDir "$D2" port=11010 rpcport=11011
 B2ARGS="-datadir=$D2"
-$BITCOIND $B2ARGS &
+$DOUCOIND $B2ARGS &
 B2PID=$!
 
 function CleanUp {
@@ -109,9 +109,9 @@ $CLI $B1ARGS stop > /dev/null 2>&1
 wait $B1PID
 
 # restart nodes with -zapwallettxes
-$BITCOIND -zapwallettxes=1 $B1ARGS &
+$DOUCOIND -zapwallettxes=1 $B1ARGS &
 B1PID=$!
-$BITCOIND -zapwallettxes=2 $B2ARGS &
+$DOUCOIND -zapwallettxes=2 $B2ARGS &
 B2PID=$!
 
 # check if confirmed transactions are there

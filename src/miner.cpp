@@ -1,5 +1,5 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2009-2014 The Doucoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -26,7 +26,7 @@ using namespace std;
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// BitcoinMiner
+// DoucoinMiner
 //
 
 //
@@ -423,7 +423,7 @@ bool ProcessBlockFound(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     {
         LOCK(cs_main);
         if (pblock->hashPrevBlock != chainActive.Tip()->GetBlockHash())
-            return error("BitcoinMiner : generated block is stale");
+            return error("DoucoinMiner : generated block is stale");
     }
 
     // Remove key from key pool
@@ -438,16 +438,16 @@ bool ProcessBlockFound(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     // Process this block the same as if we had received it from another node
     CValidationState state;
     if (!ProcessNewBlock(state, NULL, pblock))
-        return error("BitcoinMiner : ProcessNewBlock, block not accepted");
+        return error("DoucoinMiner : ProcessNewBlock, block not accepted");
 
     return true;
 }
 
-void static BitcoinMiner(CWallet *pwallet)
+void static DoucoinMiner(CWallet *pwallet)
 {
-    LogPrintf("BitcoinMiner started\n");
+    LogPrintf("DoucoinMiner started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
-    RenameThread("bitcoin-miner");
+    RenameThread("doucoin-miner");
 
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);
@@ -479,13 +479,13 @@ void static BitcoinMiner(CWallet *pwallet)
             auto_ptr<CBlockTemplate> pblocktemplate(CreateNewBlockWithKey(reservekey));
             if (!pblocktemplate.get())
             {
-                LogPrintf("Error in BitcoinMiner: Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
+                LogPrintf("Error in DoucoinMiner: Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
                 return;
             }
             CBlock *pblock = &pblocktemplate->block;
             IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
 
-            LogPrintf("Running BitcoinMiner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
+            LogPrintf("Running DoucoinMiner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
                 ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
             //
@@ -511,7 +511,7 @@ void static BitcoinMiner(CWallet *pwallet)
                         assert(hash == pblock->GetHash());
 
                         SetThreadPriority(THREAD_PRIORITY_NORMAL);
-                        LogPrintf("BitcoinMiner:\n");
+                        LogPrintf("DoucoinMiner:\n");
                         LogPrintf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", hash.GetHex(), hashTarget.GetHex());
                         ProcessBlockFound(pblock, *pwallet, reservekey);
                         SetThreadPriority(THREAD_PRIORITY_LOWEST);
@@ -577,17 +577,17 @@ void static BitcoinMiner(CWallet *pwallet)
     }
     catch (boost::thread_interrupted)
     {
-        LogPrintf("BitcoinMiner terminated\n");
+        LogPrintf("DoucoinMiner terminated\n");
         throw;
     }
     catch (const std::runtime_error &e)
     {
-        LogPrintf("BitcoinMiner runtime error: %s\n", e.what());
+        LogPrintf("DoucoinMiner runtime error: %s\n", e.what());
         return;
     }
 }
 
-void GenerateBitcoins(bool fGenerate, CWallet* pwallet, int nThreads)
+void GenerateDoucoins(bool fGenerate, CWallet* pwallet, int nThreads)
 {
     static boost::thread_group* minerThreads = NULL;
 
@@ -611,7 +611,7 @@ void GenerateBitcoins(bool fGenerate, CWallet* pwallet, int nThreads)
 
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
-        minerThreads->create_thread(boost::bind(&BitcoinMiner, pwallet));
+        minerThreads->create_thread(boost::bind(&DoucoinMiner, pwallet));
 }
 
 #endif // ENABLE_WALLET

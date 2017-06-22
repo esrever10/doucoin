@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2011-2014 The Doucoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -167,7 +167,7 @@ void Intro::pickDataDirectory()
         /* If current default data directory does not exist, let the user choose one */
         Intro intro;
         intro.setDataDirectory(dataDir);
-        intro.setWindowIcon(QIcon(":icons/bitcoin"));
+        intro.setWindowIcon(QIcon(":icons/doucoin"));
 
         while(true)
         {
@@ -181,7 +181,7 @@ void Intro::pickDataDirectory()
                 TryCreateDirectory(GUIUtil::qstringToBoostPath(dataDir));
                 break;
             } catch(fs::filesystem_error &e) {
-                QMessageBox::critical(0, tr("Bitcoin Core"),
+                QMessageBox::critical(0, tr("Doucoin Core"),
                     tr("Error: Specified data directory \"%1\" cannot be created.").arg(dataDir));
                 /* fall through, back to choosing screen */
             }
@@ -190,8 +190,8 @@ void Intro::pickDataDirectory()
         settings.setValue("strDataDir", dataDir);
     }
     /* Only override -datadir if different from the default, to make it possible to
-     * override -datadir in the bitcoin.conf file in the default data directory
-     * (to be consistent with bitcoind behavior)
+     * override -datadir in the doucoin.conf file in the default data directory
+     * (to be consistent with doucoind behavior)
      */
     if(dataDir != getDefaultDataDirectory())
         SoftSetArg("-datadir", GUIUtil::qstringToBoostPath(dataDir).string()); // use OS locale for path setting

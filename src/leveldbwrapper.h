@@ -1,9 +1,9 @@
-// Copyright (c) 2012-2014 The Bitcoin developers
+// Copyright (c) 2012-2014 The Doucoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_LEVELDBWRAPPER_H
-#define BITCOIN_LEVELDBWRAPPER_H
+#ifndef DOUCOIN_LEVELDBWRAPPER_H
+#define DOUCOIN_LEVELDBWRAPPER_H
 
 #include "clientversion.h"
 #include "serialize.h"
@@ -170,4 +170,4 @@ public:
     }
 };
 
-#endif // BITCOIN_LEVELDBWRAPPER_H
+#endif // DOUCOIN_LEVELDBWRAPPER_H

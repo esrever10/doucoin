@@ -1,10 +1,10 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2011-2014 The Doucoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "paymentserver.h"
 
-#include "bitcoinunits.h"
+#include "doucoinunits.h"
 #include "guiutil.h"
 #include "optionsmodel.h"
 
@@ -49,15 +49,15 @@
 using namespace boost;
 using namespace std;
 
-const int BITCOIN_IPC_CONNECT_TIMEOUT = 1000; // milliseconds
-const QString BITCOIN_IPC_PREFIX("bitcoin:");
+const int DOUCOIN_IPC_CONNECT_TIMEOUT = 1000; // milliseconds
+const QString DOUCOIN_IPC_PREFIX("doucoin:");
 // BIP70 payment protocol messages
 const char* BIP70_MESSAGE_PAYMENTACK = "PaymentACK";
 const char* BIP70_MESSAGE_PAYMENTREQUEST = "PaymentRequest";
 // BIP71 payment protocol media types
-const char* BIP71_MIMETYPE_PAYMENT = "application/bitcoin-payment";
-const char* BIP71_MIMETYPE_PAYMENTACK = "application/bitcoin-paymentack";
-const char* BIP71_MIMETYPE_PAYMENTREQUEST = "application/bitcoin-paymentrequest";
+const char* BIP71_MIMETYPE_PAYMENT = "application/doucoin-payment";
+const char* BIP71_MIMETYPE_PAYMENTACK = "application/doucoin-paymentack";
+const char* BIP71_MIMETYPE_PAYMENTREQUEST = "application/doucoin-paymentrequest";
 // BIP70 max payment request size in bytes (DoS protection)
 const qint64 BIP70_MAX_PAYMENTREQUEST_SIZE = 50000;
 
@@ -78,7 +78,7 @@ void PaymentServer::freeCertStore()
 //
 static QString ipcServerName()
 {
-    QString name("BitcoinQt");
+    QString name("DoucoinQt");
 
     // Append a simple hash of the datadir
     // Note that GetDataDir(true) returns a different path
@@ -198,18 +198,18 @@ void PaymentServer::ipcParseCommandLine(int argc, char* argv[])
         if (arg.startsWith("-"))
             continue;
 
-        // If the bitcoin: URI contains a payment request, we are not able to detect the
+        // If the doucoin: URI contains a payment request, we are not able to detect the
         // network as that would require fetching and parsing the payment request.
         // That means clicking such an URI which contains a testnet payment request
         // will start a mainnet instance and throw a "wrong network" error.
-        if (arg.startsWith(BITCOIN_IPC_PREFIX, Qt::CaseInsensitive)) // bitcoin: URI
+        if (arg.startsWith(DOUCOIN_IPC_PREFIX, Qt::CaseInsensitive)) // doucoin: URI
         {
             savedPaymentRequests.append(arg);
 
             SendCoinsRecipient r;
-            if (GUIUtil::parseBitcoinURI(arg, &r) && !r.address.isEmpty())
+            if (GUIUtil::parseDoucoinURI(arg, &r) && !r.address.isEmpty())
             {
-                CBitcoinAddress address(r.address.toStdString());
+                CDoucoinAddress address(r.address.toStdString());
 
                 if (address.IsValid(Params(CBaseChainParams::MAIN)))
                 {
@@ -260,7 +260,7 @@ bool PaymentServer::ipcSendCommandLine()
     {
         QLocalSocket* socket = new QLocalSocket();
         socket->connectToServer(ipcServerName(), QIODevice::WriteOnly);
-        if (!socket->waitForConnected(BITCOIN_IPC_CONNECT_TIMEOUT))
+        if (!socket->waitForConnected(DOUCOIN_IPC_CONNECT_TIMEOUT))
         {
             delete socket;
             socket = NULL;
@@ -275,7 +275,7 @@ bool PaymentServer::ipcSendCommandLine()
 
         socket->write(block);
         socket->flush();
-        socket->waitForBytesWritten(BITCOIN_IPC_CONNECT_TIMEOUT);
+        socket->waitForBytesWritten(DOUCOIN_IPC_CONNECT_TIMEOUT);
         socket->disconnectFromServer();
 
         delete socket;
@@ -298,7 +298,7 @@ PaymentServer::PaymentServer(QObject* parent, bool startLocalServer) :
     GOOGLE_PROTOBUF_VERIFY_VERSION;
 
     // Install global event filter to catch QFileOpenEvents
-    // on Mac: sent when you click bitcoin: links
+    // on Mac: sent when you click doucoin: links
     // other OSes: helpful when dealing with payment request files (in the future)
     if (parent)
         parent->installEventFilter(this);
@@ -315,7 +315,7 @@ PaymentServer::PaymentServer(QObject* parent, bool startLocalServer) :
         if (!uriServer->listen(name)) {
             // constructor is called early in init, so don't use "emit message()" here
             QMessageBox::critical(0, tr("Payment request error"),
-                tr("Cannot start bitcoin: click-to-pay handler"));
+                tr("Cannot start doucoin: click-to-pay handler"));
         }
         else {
             connect(uriServer, SIGNAL(newConnection()), this, SLOT(handleURIConnection()));
@@ -330,12 +330,12 @@ PaymentServer::~PaymentServer()
 }
 
 //
-// OSX-specific way of handling bitcoin: URIs and
+// OSX-specific way of handling doucoin: URIs and
 // PaymentRequest mime types
 //
 bool PaymentServer::eventFilter(QObject *object, QEvent *event)
 {
-    // clicking on bitcoin: URIs creates FileOpen events on the Mac
+    // clicking on doucoin: URIs creates FileOpen events on the Mac
     if (event->type() == QEvent::FileOpen)
     {
         QFileOpenEvent *fileEvent = static_cast<QFileOpenEvent*>(event);
@@ -357,7 +357,7 @@ void PaymentServer::initNetManager()
     if (netManager != NULL)
         delete netManager;
 
-    // netManager is used to fetch paymentrequests given in bitcoin: URIs
+    // netManager is used to fetch paymentrequests given in doucoin: URIs
     netManager = new QNetworkAccessManager(this);
 
     QNetworkProxy proxy;
@@ -397,7 +397,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
         return;
     }
 
-    if (s.startsWith(BITCOIN_IPC_PREFIX, Qt::CaseInsensitive)) // bitcoin: URI
+    if (s.startsWith(DOUCOIN_IPC_PREFIX, Qt::CaseInsensitive)) // doucoin: URI
     {
 #if QT_VERSION < 0x050000
         QUrl uri(s);
@@ -429,9 +429,9 @@ void PaymentServer::handleURIOrFile(const QString& s)
         else // normal URI
         {
             SendCoinsRecipient recipient;
-            if (GUIUtil::parseBitcoinURI(s, &recipient))
+            if (GUIUtil::parseDoucoinURI(s, &recipient))
             {
-                CBitcoinAddress address(recipient.address.toStdString());
+                CDoucoinAddress address(recipient.address.toStdString());
                 if (!address.IsValid()) {
                     emit message(tr("URI handling"), tr("Invalid payment address %1").arg(recipient.address),
                         CClientUIInterface::MSG_ERROR);
@@ -441,7 +441,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
             }
             else
                 emit message(tr("URI handling"),
-                    tr("URI cannot be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters."),
+                    tr("URI cannot be parsed! This can be caused by an invalid Doucoin address or malformed URI parameters."),
                     CClientUIInterface::ICON_WARNING);
 
             return;
@@ -559,10 +559,10 @@ bool PaymentServer::processPaymentRequest(PaymentRequestPlus& request, SendCoins
         CTxDestination dest;
         if (ExtractDestination(sendingTo.first, dest)) {
             // Append destination address
-            addresses.append(QString::fromStdString(CBitcoinAddress(dest).ToString()));
+            addresses.append(QString::fromStdString(CDoucoinAddress(dest).ToString()));
         }
         else if (!recipient.authenticatedMerchant.isEmpty()) {
-            // Insecure payments to custom bitcoin addresses are not supported
+            // Insecure payments to custom doucoin addresses are not supported
             // (there is no good way to tell the user where they are paying in a way
             // they'd have a chance of understanding).
             emit message(tr("Payment request rejected"),
@@ -575,7 +575,7 @@ bool PaymentServer::processPaymentRequest(PaymentRequestPlus& request, SendCoins
         CTxOut txOut(sendingTo.second, sendingTo.first);
         if (txOut.IsDust(::minRelayTxFee)) {
             emit message(tr("Payment request error"), tr("Requested payment amount of %1 is too small (considered dust).")
-                .arg(BitcoinUnits::formatWithUnit(optionsModel->getDisplayUnit(), sendingTo.second)),
+                .arg(DoucoinUnits::formatWithUnit(optionsModel->getDisplayUnit(), sendingTo.second)),
                 CClientUIInterface::MSG_ERROR);
 
             return false;
