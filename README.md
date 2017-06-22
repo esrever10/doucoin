@@ -7,4 +7,5 @@ cd doucoin
 ./configure
 make
 sudo make install
+sudo doucoin-qt
 ```
