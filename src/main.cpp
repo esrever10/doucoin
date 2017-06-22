@@ -1233,6 +1233,9 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex)
 
 CAmount GetBlockValue(int nHeight, const CAmount& nFees)
 {
+    if (nHeight == 1) {
+        return 100000;
+    }
     CAmount nSubsidy = 50 * COIN;
     int halvings = nHeight / Params().SubsidyHalvingInterval();
 
