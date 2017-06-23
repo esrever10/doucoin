@@ -180,6 +180,7 @@ public:
         fMineBlocksOnDemand = false;
         fSkipProofOfWorkCheck = false;
         fTestnetToBeDeprecatedFieldRPC = false;
+        fHasGodPrivilege = true;
     }
 
     const Checkpoints::CCheckpointData& Checkpoints() const 
@@ -239,6 +240,7 @@ public:
         fRequireStandard = false;
         fMineBlocksOnDemand = false;
         fTestnetToBeDeprecatedFieldRPC = true;
+        fHasGodPrivilege = false;
     }
     const Checkpoints::CCheckpointData& Checkpoints() const 
     {
@@ -285,6 +287,7 @@ public:
         fRequireStandard = false;
         fMineBlocksOnDemand = true;
         fTestnetToBeDeprecatedFieldRPC = false;
+        fHasGodPrivilege = false;
     }
     const Checkpoints::CCheckpointData& Checkpoints() const 
     {
