@@ -115,7 +115,7 @@ public:
         pchMessageStart[1] = 0x33;
         pchMessageStart[2] = 0x33;
         pchMessageStart[3] = 0x33;
-        vAlertPubKey = ParseHex("04fc9702847840aaf195de8442ebecedf5b095cdbb9bc716bda9110971b28a49e0ead8564ff0db22209e0374782c093bb899692d524e9d6a6956e7c5ecbcd68284");
+        vAlertPubKey = ParseHex("04ef86854ccdb8036eb95d987f3f4a03eeaa90e2c6534e3a611d36f3c674a0445944dd83e35d6f9b69279cae03e7646b2688c5a2b63ca44539c7a83f56bf1cb70a");
         nDefaultPort = 23333;
         bnProofOfWorkLimit = ~uint256(0) >> 32;
         nSubsidyHalvingInterval = 210000;
@@ -202,7 +202,7 @@ public:
         pchMessageStart[1] = 0x33;
         pchMessageStart[2] = 0x33;
         pchMessageStart[3] = 0x33;
-        vAlertPubKey = ParseHex("04302390343f91cc401d56d68b123028bf52e5fca1939df127f63c6467cdf9c8e2c14b61104cf817d0b780da337893ecc4aaff1309e536162dabbdb45200ca2b0a");
+        vAlertPubKey = ParseHex("0470cefa54d9235e51fdfbee3e47646d1577305136a6a7761b72ac5db4c8fb7c9b37b9e1225c4c86dea9ef6389ba17c855bfd1b651a3082e4c01d38b72da553e5f");
         nDefaultPort = 21111;
         nEnforceBlockUpgradeMajority = 51;
         nRejectBlockOutdatedMajority = 75;
@@ -220,10 +220,12 @@ public:
 
         vFixedSeeds.clear();
         vSeeds.clear();
-        vSeeds.push_back(CDNSSeedData("alexykot.me", "testnet-seed.alexykot.me"));
-        vSeeds.push_back(CDNSSeedData("doucoin.petertodd.org", "testnet-seed.doucoin.petertodd.org"));
-        vSeeds.push_back(CDNSSeedData("bluematt.me", "testnet-seed.bluematt.me"));
-        vSeeds.push_back(CDNSSeedData("doucoin.schildbach.de", "testnet-seed.doucoin.schildbach.de"));
+        // vSeeds.push_back(CDNSSeedData("alexykot.me", "testnet-seed.alexykot.me"));
+        // vSeeds.push_back(CDNSSeedData("doucoin.petertodd.org", "testnet-seed.doucoin.petertodd.org"));
+        // vSeeds.push_back(CDNSSeedData("bluematt.me", "testnet-seed.bluematt.me"));
+        // vSeeds.push_back(CDNSSeedData("doucoin.schildbach.de", "testnet-seed.doucoin.schildbach.de"));
+        vSeeds.push_back(CDNSSeedData("ali-c2", "47.93.54.44"));
+        vSeeds.push_back(CDNSSeedData("ali-dou", "47.88.152.19"));
 
         base58Prefixes[PUBKEY_ADDRESS] = list_of(111);
         base58Prefixes[SCRIPT_ADDRESS] = list_of(196);
@@ -231,7 +233,7 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = list_of(0x04)(0x35)(0x87)(0xCF);
         base58Prefixes[EXT_SECRET_KEY] = list_of(0x04)(0x35)(0x83)(0x94);
 
-        convertSeed6(vFixedSeeds, pnSeed6_test, ARRAYLEN(pnSeed6_test));
+        // convertSeed6(vFixedSeeds, pnSeed6_test, ARRAYLEN(pnSeed6_test));
 
         fRequireRPCPassword = true;
         fMiningRequiresPeers = true;
