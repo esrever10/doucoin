@@ -12,7 +12,7 @@ sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config l
 ## Mac
 ```
 brew install autoconf automake libtool boost miniupnpc openssl pkg-config protobuf qt
-brew install https://raw.github.com/mxcl/homebrew/master/Library/Formula/berkeley-db4.rb -–without-java
+brew install https://raw.githubusercontent.com/apiaryio/homebrew/master/Library/Formula/berkeley-db4.rb -–without-java
 ```
 # Build
 ```
