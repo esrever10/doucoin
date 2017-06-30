@@ -15,6 +15,9 @@ sudo apt-get install build-essential libtool autotools-dev autoconf \
 ## Mac
 ```
 brew install autoconf automake libtool berkeley-db@4 boost miniupnpc openssl pkg-config protobuf qt
+export LDFLAGS=-L/usr/local/opt/openssl/lib
+export CPPFLAGS=-I/usr/local/opt/openssl/include
+
 ```
 # Build
 ```
