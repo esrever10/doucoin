@@ -1,14 +1,14 @@
-// Copyright (c) 2011-2014 The Doucoin developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2016 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef DOUCOIN_QT_UTILITYDIALOG_H
-#define DOUCOIN_QT_UTILITYDIALOG_H
+#ifndef BITCOIN_QT_UTILITYDIALOG_H
+#define BITCOIN_QT_UTILITYDIALOG_H
 
 #include <QDialog>
 #include <QObject>
 
-class DoucoinGUI;
+class BitcoinGUI;
 class ClientModel;
 
 namespace Ui {
@@ -31,7 +31,7 @@ private:
     Ui::HelpMessageDialog *ui;
     QString text;
 
-private slots:
+private Q_SLOTS:
     void on_okButton_accepted();
 };
 
@@ -43,10 +43,10 @@ class ShutdownWindow : public QWidget
 
 public:
     ShutdownWindow(QWidget *parent=0, Qt::WindowFlags f=0);
-    static void showShutdownWindow(DoucoinGUI *window);
+    static QWidget *showShutdownWindow(BitcoinGUI *window);
 
 protected:
     void closeEvent(QCloseEvent *event);
 };
 
-#endif // DOUCOIN_QT_UTILITYDIALOG_H
+#endif // BITCOIN_QT_UTILITYDIALOG_H

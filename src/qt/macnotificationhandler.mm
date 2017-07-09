@@ -1,5 +1,5 @@
-// Copyright (c) 2011-2013 The Doucoin Core developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2013 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "macnotificationhandler.h"
@@ -13,7 +13,7 @@
 - (NSString *)__bundleIdentifier
 {
     if (self == [NSBundle mainBundle]) {
-        return @"org.doucoinfoundation.Doucoin-Qt";
+        return @"org.bitcoinfoundation.Bitcoin-Qt";
     } else {
         return [self __bundleIdentifier];
     }

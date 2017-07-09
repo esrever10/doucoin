@@ -1,4 +1,4 @@
-Source: doucoin
+Source: bitcoin
 Section: utils
 Priority: optional
 Maintainer: Jonas Smedegaard <dr@jones.dk>
@@ -12,7 +12,7 @@ Build-Depends: debhelper,
  libdb4.8++-dev,
  libssl-dev,
  pkg-config,
- libminiupnpc8-dev,
+ libminiupnpc8-dev | libminiupnpc-dev (>> 1.6),
  libboost-filesystem-dev (>> 1.35) | libboost-filesystem1.35-dev,
  libboost-program-options-dev (>> 1.35) | libboost-program-options1.35-dev,
  libboost-thread-dev (>> 1.35) | libboost-thread1.35-dev,
@@ -23,51 +23,45 @@ Build-Depends: debhelper,
  libprotobuf-dev, protobuf-compiler,
  python
 Standards-Version: 3.9.2
-Homepage: https://www.doucoin.org/
-Vcs-Git: git://github.com/doucoin/doucoin.git
-Vcs-Browser: https://github.com/doucoin/doucoin
+Homepage: https://bitcoincore.org/
+Vcs-Git: git://github.com/bitcoin/bitcoin.git
+Vcs-Browser: https://github.com/bitcoin/bitcoin
 
-Package: doucoind
+Package: bitcoind
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - daemon
- Doucoin is a free open source peer-to-peer electronic cash system that
- is completely decentralized, without the need for a central server or
- trusted parties.  Users hold the crypto keys to their own money and
- transact directly with each other, with the help of a P2P network to
- check for double-spending.
+ Bitcoin is an experimental new digital currency that enables instant
+ payments to anyone, anywhere in the world. Bitcoin uses peer-to-peer
+ technology to operate with no central authority: managing transactions
+ and issuing money are carried out collectively by the network. Bitcoin Core
+ is the name of the open source software which enables the use of this currency.
  .
- Full transaction history is stored locally at each client.  This
- requires 20+ GB of space, slowly growing.
- .
- This package provides the daemon, doucoind, and the CLI tool
- doucoin-cli to interact with the daemon.
+ This package provides the daemon, bitcoind, and the CLI tool
+ bitcoin-cli to interact with the daemon.
 
-Package: doucoin-qt
+Package: bitcoin-qt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - Qt GUI
- Doucoin is a free open source peer-to-peer electronic cash system that
- is completely decentralized, without the need for a central server or
- trusted parties.  Users hold the crypto keys to their own money and
- transact directly with each other, with the help of a P2P network to
- check for double-spending.
+ Bitcoin is an experimental new digital currency that enables instant
+ payments to anyone, anywhere in the world. Bitcoin uses peer-to-peer
+ technology to operate with no central authority: managing transactions
+ and issuing money are carried out collectively by the network. Bitcoin Core
+ is the name of the open source software which enables the use of this currency.
  .
- Full transaction history is stored locally at each client.  This
- requires 20+ GB of space, slowly growing.
- .
- This package provides Doucoin-Qt, a GUI for Doucoin based on Qt.
+ This package provides Bitcoin-Qt, a GUI for Bitcoin based on Qt.
 
-Package: doucoin-tx
+Package: bitcoin-tx
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer digital currency - standalone transaction tool
- Doucoin is a free open source peer-to-peer electronic cash system that
- is completely decentralized, without the need for a central server or
- trusted parties.  Users hold the crypto keys to their own money and
- transact directly with each other, with the help of a P2P network to
- check for double-spending.
+ Bitcoin is an experimental new digital currency that enables instant
+ payments to anyone, anywhere in the world. Bitcoin uses peer-to-peer
+ technology to operate with no central authority: managing transactions
+ and issuing money are carried out collectively by the network. Bitcoin Core
+ is the name of the open source software which enables the use of this currency.
  .
- This package provides doucoin-tx, a command-line transaction creation
- tool which can be used without a doucoin daemon.  Some means of
+ This package provides bitcoin-tx, a command-line transaction creation
+ tool which can be used without a bitcoin daemon.  Some means of
  exchanging minimal transaction data with peers is still required.
