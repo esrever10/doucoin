@@ -1,12 +1,12 @@
-// Copyright (c) 2009-2016 The Bitcoin Core developers
+// Copyright (c) 2009-2016 The Doucoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_NETADDRESS_H
-#define BITCOIN_NETADDRESS_H
+#ifndef DOUCOIN_NETADDRESS_H
+#define DOUCOIN_NETADDRESS_H
 
 #if defined(HAVE_CONFIG_H)
-#include "config/bitcoin-config.h"
+#include "config/doucoin-config.h"
 #endif
 
 #include "compat.h"
@@ -168,4 +168,4 @@ class CService : public CNetAddr
         }
 };
 
-#endif // BITCOIN_NETADDRESS_H
+#endif // DOUCOIN_NETADDRESS_H

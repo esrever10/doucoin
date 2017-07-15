@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Doucoin Core
+Comment=Connect to the Doucoin P2P Network
+Comment[de]=Verbinde mit dem Doucoin peer-to-peer Netzwerk
+Comment[fr]=Doucoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Doucoin, eşten eşe kriptografik sanal para birimi
+Exec=doucoin-qt %u
+Terminal=false
+Type=Application
+Icon=doucoin128
+MimeType=x-scheme-handler/doucoin;
+Categories=Office;Finance;

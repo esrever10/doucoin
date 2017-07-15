@@ -1,0 +1,81 @@
+policy_module(doucoin, 1.100.1)
+
+########################################
+#
+# Declarations
+#
+
+type doucoin_t;
+type doucoin_exec_t;
+init_daemon_domain(doucoin_t, doucoin_exec_t)
+
+permissive doucoin_t;
+
+type doucoin_initrc_exec_t;
+init_script_file(doucoin_initrc_exec_t)
+
+type doucoin_conf_t;
+files_type(doucoin_conf_t)
+
+type doucoin_var_lib_t;
+files_type(doucoin_var_lib_t)
+
+type doucoin_var_run_t;
+files_type(doucoin_var_run_t)
+
+type doucoin_port_t;
+corenet_port(doucoin_port_t)
+
+########################################
+#
+# doucoin local policy
+#
+allow doucoin_t self:process { fork };
+
+allow doucoin_t self:fifo_file rw_fifo_file_perms;
+allow doucoin_t self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(doucoin_t, doucoin_conf_t, doucoin_conf_t)
+manage_files_pattern(doucoin_t, doucoin_conf_t, doucoin_conf_t)
+
+manage_dirs_pattern(doucoin_t, doucoin_var_lib_t, doucoin_var_lib_t)
+manage_files_pattern(doucoin_t, doucoin_var_lib_t, doucoin_var_lib_t)
+files_var_lib_filetrans(doucoin_t, doucoin_var_lib_t, { dir file })
+
+manage_dirs_pattern(doucoin_t, doucoin_var_run_t, doucoin_var_run_t)
+manage_files_pattern(doucoin_t, doucoin_var_run_t, doucoin_var_run_t)
+
+sysnet_dns_name_resolve(doucoin_t)
+corenet_all_recvfrom_unlabeled(doucoin_t)
+
+allow doucoin_t self:tcp_socket create_stream_socket_perms;
+corenet_tcp_sendrecv_generic_if(doucoin_t)
+corenet_tcp_sendrecv_generic_node(doucoin_t)
+corenet_tcp_sendrecv_all_ports(doucoin_t)
+corenet_tcp_bind_generic_node(doucoin_t)
+
+gen_require(`
+    type doucoin_port_t;
+')
+allow doucoin_t doucoin_port_t:tcp_socket name_bind;
+
+gen_require(`
+    type doucoin_port_t;
+')
+allow doucoin_t doucoin_port_t:tcp_socket name_connect;
+
+domain_use_interactive_fds(doucoin_t)
+
+files_read_etc_files(doucoin_t)
+
+miscfiles_read_localization(doucoin_t)
+
+sysnet_dns_name_resolve(doucoin_t)
+
+allow doucoin_t doucoin_exec_t:file execute_no_trans;
+allow doucoin_t self:process setsched;
+corecmd_exec_ls(doucoin_t)
+corenet_tcp_connect_http_port(doucoin_t)
+dev_read_urand(doucoin_t)
+fs_getattr_xattr_fs(doucoin_t)
+kernel_read_system_state(doucoin_t)

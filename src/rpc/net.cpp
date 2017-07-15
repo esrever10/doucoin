@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2016 The Bitcoin Core developers
+// Copyright (c) 2009-2016 The Doucoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -204,8 +204,8 @@ UniValue addnode(const JSONRPCRequest& request)
             "1. \"node\"     (string, required) The node (see getpeerinfo for nodes)\n"
             "2. \"command\"  (string, required) 'add' to add a node to the list, 'remove' to remove a node from the list, 'onetry' to try a connection to the node once\n"
             "\nExamples:\n"
-            + HelpExampleCli("addnode", "\"192.168.0.6:8333\" \"onetry\"")
-            + HelpExampleRpc("addnode", "\"192.168.0.6:8333\", \"onetry\"")
+            + HelpExampleCli("addnode", "\"192.168.0.6:23333\" \"onetry\"")
+            + HelpExampleRpc("addnode", "\"192.168.0.6:23333\", \"onetry\"")
         );
 
     if(!g_connman)
@@ -243,8 +243,8 @@ UniValue disconnectnode(const JSONRPCRequest& request)
             "\nArguments:\n"
             "1. \"address\"     (string, required) The IP address/port of the node\n"
             "\nExamples:\n"
-            + HelpExampleCli("disconnectnode", "\"192.168.0.6:8333\"")
-            + HelpExampleRpc("disconnectnode", "\"192.168.0.6:8333\"")
+            + HelpExampleCli("disconnectnode", "\"192.168.0.6:23333\"")
+            + HelpExampleRpc("disconnectnode", "\"192.168.0.6:23333\"")
         );
 
     if(!g_connman)
@@ -273,7 +273,7 @@ UniValue getaddednodeinfo(const JSONRPCRequest& request)
             "    \"connected\" : true|false,          (boolean) If connected\n"
             "    \"addresses\" : [                    (list of objects) Only when connected = true\n"
             "       {\n"
-            "         \"address\" : \"192.168.0.201:8333\",  (string) The bitcoin server IP and port we're connected to\n"
+            "         \"address\" : \"192.168.0.201:23333\",  (string) The doucoin server IP and port we're connected to\n"
             "         \"connected\" : \"outbound\"           (string) connection, inbound or outbound\n"
             "       }\n"
             "     ]\n"

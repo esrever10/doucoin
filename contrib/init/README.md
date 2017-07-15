@@ -1,11 +1,11 @@
 Sample configuration files for:
 
-SystemD: bitcoind.service
-Upstart: bitcoind.conf
-OpenRC:  bitcoind.openrc
-         bitcoind.openrcconf
-CentOS:  bitcoind.init
-OS X:    org.bitcoin.bitcoind.plist
+SystemD: doucoind.service
+Upstart: doucoind.conf
+OpenRC:  doucoind.openrc
+         doucoind.openrcconf
+CentOS:  doucoind.init
+OS X:    org.doucoin.doucoind.plist
 
 have been made available to assist packagers in creating node packages here.
 

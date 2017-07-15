@@ -1,10 +1,10 @@
 // Copyright (c) 2010 Satoshi Nakamoto
-// Copyright (c) 2009-2016 The Bitcoin Core developers
+// Copyright (c) 2009-2016 The Doucoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_RPCSERVER_H
-#define BITCOIN_RPCSERVER_H
+#ifndef DOUCOIN_RPCSERVER_H
+#define DOUCOIN_RPCSERVER_H
 
 #include "amount.h"
 #include "rpc/protocol.h"
@@ -145,7 +145,7 @@ public:
 };
 
 /**
- * Bitcoin RPC command dispatcher.
+ * Doucoin RPC command dispatcher.
  */
 class CRPCTable
 {
@@ -209,4 +209,4 @@ void RPCNotifyBlockChange(bool ibd, const CBlockIndex *);
 // Retrieves any serialization flags requested in command line argument
 int RPCSerializationFlags();
 
-#endif // BITCOIN_RPCSERVER_H
+#endif // DOUCOIN_RPCSERVER_H

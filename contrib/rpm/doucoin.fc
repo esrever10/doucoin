@@ -1,0 +1,8 @@
+/usr/bin/doucoin-cli		--	gen_context(system_u:object_r:doucoin_exec_t,s0)
+/usr/sbin/doucoind		--	gen_context(system_u:object_r:doucoin_exec_t,s0)
+/usr/lib(64)?/doucoin/doucoind		--	gen_context(system_u:object_r:doucoin_exec_t,s0)
+
+/etc/doucoin(/.*)?		gen_context(system_u:object_r:doucoin_conf_t,s0)
+/var/lib/doucoin(/.*)?		gen_context(system_u:object_r:doucoin_var_lib_t,s0)
+
+(/var)?/run/doucoind(/.*)?   gen_context(system_u:object_r:doucoin_var_run_t,s0)

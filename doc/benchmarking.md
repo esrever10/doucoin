@@ -1,11 +1,11 @@
 Benchmarking
 ============
 
-Bitcoin Core has an internal benchmarking framework, with benchmarks
+Doucoin Core has an internal benchmarking framework, with benchmarks
 for cryptographic algorithms such as SHA1, SHA256, SHA512 and RIPEMD160. As well as the rolling bloom filter.
 
-After compiling bitcoin-core, the benchmarks can be run with:
-`src/bench/bench_bitcoin`
+After compiling doucoin-core, the benchmarks can be run with:
+`src/bench/bench_doucoin`
 
 The output will look similar to:
 ```
